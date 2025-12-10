@@ -19,4 +19,6 @@ class DailyForecast {
       condition: json['weather'][0]['main'] ?? '',
     );
   }
+
+  get icon => null;
 }

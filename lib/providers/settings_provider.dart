@@ -34,4 +34,6 @@ class SettingsProvider with ChangeNotifier {
     await _box.put(_metricKey, _isMetric);
     notifyListeners();
   }
+
+  void toggleDarkMode() {}
 }

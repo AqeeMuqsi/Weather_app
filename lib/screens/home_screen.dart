@@ -142,6 +142,69 @@ class HomeScreen extends StatelessWidget {
                 WeatherCard(weather: provider.currentWeather!)
               else
                 const Text('No weather data available'),
+              // Add to Favourites Button
+              if (provider.currentWeather != null) ...[
+                const SizedBox(height: 12),
+                Card(
+                  child: InkWell(
+                    onTap: () {
+                      final city = provider.currentWeather!.cityName;
+                      if (provider.favourites.contains(city)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('⭐ $city is already in your favourites'),
+                            backgroundColor: Colors.orange,
+                          ),
+                        );
+                      } else {
+                        provider.addFavourite(city);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('⭐ $city added to favourites!'),
+                            backgroundColor: Colors.green,
+                            action: SnackBarAction(
+                              label: 'VIEW',
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => const FavouritesScreen()),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    borderRadius: BorderRadius.circular(24),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            provider.favourites.contains(provider.currentWeather!.cityName)
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: Colors.amber,
+                            size: 28,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            provider.favourites.contains(provider.currentWeather!.cityName)
+                                ? 'Already in Favourites'
+                                : 'Add ${provider.currentWeather!.cityName} to Favourites',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 16),
               if (provider.currentWeather != null) ...[
                 WeatherDetailsGrid(

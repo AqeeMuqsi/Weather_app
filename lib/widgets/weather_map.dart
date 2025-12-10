@@ -31,8 +31,8 @@ class WeatherMap extends StatelessWidget {
             height: 250,
             child: FlutterMap(
               options: MapOptions(
-                center: LatLng(latitude, longitude),
-                zoom: 10.0,
+                initialCenter: LatLng(latitude, longitude),
+                initialZoom: 10.0,
               ),
               children: [
                 TileLayer(
